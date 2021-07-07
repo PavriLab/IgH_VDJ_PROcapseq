@@ -6,16 +6,6 @@ from collections import Counter
 
 import pysam
 
-#############
-## Read Me ##
-#############
-# Complete redesign of the discard step by Tobias Neumann.
-#
-# 22/06/2020 Created
-#
-# This just scans through the BAM, and reports the number of unique IDs for mapped reads. Unpapped reads will be ignored.
-#
-# Last revised: 26/jun/2020   by: kimon.froussios@imp.ac.at
 
 #################
 ## Parameters ##

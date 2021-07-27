@@ -147,7 +147,7 @@ elif [ "$LOCUS" = "CH12" ]; then
 elif [ "$LOCUS" = "Ramos_IGH" ]; then
   INDEXDIR="/groups/pavri/Kimon/ursi/Ramos_PRO/aux/Hg38_plus_RamosIgH"
   CELLLINE="Ramos_IgH"
-  CHRINFO="/groups/pavri/Kimon/ursi/Ramos_PRO/aux/Hg38_plus_RamosIgH/Hg38_plus_RamosIgH_chrsizes.txt"
+  CHRINFO="/groups/pavri/Kimon/ursi/Ramos_PRO/aux/Hg38_plus_RamosIgH/Hg38_plus_RamosIgH_plus_dmr6_chrsizes.txt"
   GENOME="Hg38"
 else
   echo "${prefix}: Invalid predefined LOCUS ${LOCUS}"

@@ -129,21 +129,31 @@ elif [ "$PROprot" == 'quantrev' ]; then
     bedtools genomecov -ibam ${outDir}/${prefix}.sorted.bam -bg -5 -strand - -scale ${scaleFactor} > ${outDir}/${prefix}.${NPRIME}prime+.unsorted.bedGraph
     bedtools genomecov -ibam ${outDir}/${prefix}.sorted.bam -bg -5 -strand + -scale ${scaleFactor} > ${outDir}/${prefix}.temp.bedGraph
     # No need to shift coordinates. Supposedly the first base of quantseq-REV reads is the last real base of the mRNA before the polyA tail.
+elif [ "$PROprot" == 'chipseq' ]; then
+      echo "${prefix}: chipseq unstranded"
+      # ChIPseq is unstranded so we do not care about orientation
+      bedtools genomecov -ibam ${outDir}/${prefix}.sorted.bam -bg -scale ${scaleFactor} > ${outDir}/${prefix}.unsorted.bedGraph
+      bedSort ${outDir}/${prefix}.unsorted.bedGraph ${outDir}/${prefix}.bedGraph
+      bedGraphToBigWig ${outDir}/${prefix}.bedGraph ${outDir}/${prefix}.bw || true
+      rm ${outDir}/${prefix}.unsorted.bedGraph
 fi
-# Multiply - strand scores by -1, for nicer visualisation in genome browser.
-awk 'BEGIN{OFS="\t"}{print $1,$2,$3,-1*$4}' ${outDir}/${prefix}.temp.bedGraph > ${outDir}/${prefix}.${NPRIME}prime-.unsorted.bedGraph
-rm ${outDir}/${prefix}.temp.bedGraph
 
-bedSort ${outDir}/${prefix}.${NPRIME}prime+.unsorted.bedGraph ${outDir}/${prefix}_${NPRIME}prime+.bedGraph
-bedSort ${outDir}/${prefix}.${NPRIME}prime-.unsorted.bedGraph ${outDir}/${prefix}_${NPRIME}prime-.bedGraph
-rm ${outDir}/${prefix}.${NPRIME}prime+.unsorted.bedGraph
-rm ${outDir}/${prefix}.${NPRIME}prime-.unsorted.bedGraph
+if [ "$PROprot" != 'chipseq' ]; then
+      # Multiply - strand scores by -1, for nicer visualisation in genome browser.
+      awk 'BEGIN{OFS="\t"}{print $1,$2,$3,-1*$4}' ${outDir}/${prefix}.temp.bedGraph > ${outDir}/${prefix}.${NPRIME}prime-.unsorted.bedGraph
+      rm ${outDir}/${prefix}.temp.bedGraph
 
-echo ""
-echo "${prefix}: Converting bedGraph to BigWig"
-bedGraphToBigWig ${outDir}/${prefix}_${NPRIME}prime+.bedGraph $chrinfo ${outDir}/${prefix}_${NPRIME}prime+.bw || true
-bedGraphToBigWig ${outDir}/${prefix}_${NPRIME}prime-.bedGraph $chrinfo ${outDir}/${prefix}_${NPRIME}prime-.bw || true
-# Conversion fails if bedgraph empty, which is fine, but I still want the sorted bam to be removed.
+      bedSort ${outDir}/${prefix}.${NPRIME}prime+.unsorted.bedGraph ${outDir}/${prefix}_${NPRIME}prime+.bedGraph
+      bedSort ${outDir}/${prefix}.${NPRIME}prime-.unsorted.bedGraph ${outDir}/${prefix}_${NPRIME}prime-.bedGraph
+      rm ${outDir}/${prefix}.${NPRIME}prime+.unsorted.bedGraph
+      rm ${outDir}/${prefix}.${NPRIME}prime-.unsorted.bedGraph
+
+      echo ""
+      echo "${prefix}: Converting bedGraph to BigWig"
+      bedGraphToBigWig ${outDir}/${prefix}_${NPRIME}prime+.bedGraph $chrinfo ${outDir}/${prefix}_${NPRIME}prime+.bw || true
+      bedGraphToBigWig ${outDir}/${prefix}_${NPRIME}prime-.bedGraph $chrinfo ${outDir}/${prefix}_${NPRIME}prime-.bw || true
+      # Conversion fails if bedgraph empty, which is fine, but I still want the sorted bam to be removed.
+fi
 
 echo " "
 echo "${prefix}: Tracks created"

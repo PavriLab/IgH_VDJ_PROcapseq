@@ -143,6 +143,7 @@ echo "${prefix}: Aligning to ${INDEX}"
 bowtie --strata -a -m $maxmultis --phred33-quals --chunkmbs 512 -v ${mm_tol} -p 4 -q -S $INDEX ${outDir}/${prefix}.fastq ${outDir}/${prefix}_${LOCUS}_mm${mm_tol}.aln.sam
 samtools view -@ 3 -b ${outDir}/${prefix}_${LOCUS}_mm${mm_tol}.aln.sam > ${outDir}/${prefix}_${LOCUS}_mm${mm_tol}.aln.bam
 aln="${outDir}/${prefix}_${LOCUS}_mm${mm_tol}.aln.bam"
+samtools index -@ 3 $aln
 rm ${outDir}/${prefix}_${LOCUS}_mm${mm_tol}.aln.sam
 
 cnt=$(samtools view -c -f 4 $aln)
@@ -171,6 +172,7 @@ if [ "$ntnum" -gt 0 ] && [ "$nodedup" -eq 0 ]; then
     echo "${prefix}: Removing duplicates"
     umi_tools dedup --temp-dir=${outDir}/tmp/${prefix} -I $aln -S ${outDir}/${prefix}_${LOCUS}_mm${mm_tol}.deduped.bam --edit-distance-threshold=${mm_umi} --no-sort-output
     aln="${outDir}/${prefix}_${LOCUS}_mm${mm_tol}.deduped.bam"
+    samtools index -@ 3 $aln
 else
   echo "${prefix}: Skipping duplicate removal"
 fi

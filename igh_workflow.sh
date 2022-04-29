@@ -149,6 +149,21 @@ elif [ "$LOCUS" = "Ramos_IGH" ]; then
   CELLLINE="Ramos_IgH"
   CHRINFO="/groups/pavri/Kimon/ursi/Ramos_PRO/aux/Hg38_plus_RamosIgH/Hg38_plus_RamosIgH_plus_dmr6_chrsizes.txt"
   GENOME="Hg38"
+elif [ "$LOCUS" = "Ramos_VH3" ]; then
+  INDEXDIR="/mnt/data5/lbcb/projects/rushad-pavrilab-202107/procapseq-mm10/data/Hg38_plus_RamosIgH"
+  CELLLINE="VH3-30"
+  CHRINFO="$INDEXDIR/Hg38_plus_dmr6_plus_VH3-30_chrsizes.txt"
+  GENOME="Hg38"
+elif [ "$LOCUS" = "Ramos_VH4" ]; then
+  INDEXDIR="/mnt/data5/lbcb/projects/rushad-pavrilab-202107/procapseq-mm10/data/Hg38_plus_RamosIgH"
+  CELLLINE="VH4-59"
+  CHRINFO="$INDEXDIR/Hg38_plus_dmr6_plus_VH4-59_chrsizes.txt"
+  GENOME="Hg38"
+elif [ "$LOCUS" = "Ramos_B18" ]; then
+  INDEXDIR="/mnt/data5/lbcb/projects/rushad-pavrilab-202107/procapseq-mm10/data/Hg38_plus_RamosIgH"
+  CELLLINE="B1-8hi"
+  CHRINFO="$INDEXDIR/Hg38_plus_dmr6_plus_B1-8hi_chrsizes.txt"
+  GENOME="Hg38"
 else
   echo "${prefix}: Invalid predefined LOCUS ${LOCUS}"
   exit 1

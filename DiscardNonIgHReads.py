@@ -45,7 +45,7 @@ if args.genome == "B18_DFR" or args.genome == "CH12_VDJ":
     #annotfile="/groups/pavri/bioinfo/Marisol/custom_seqs/B18_DFR_newest/filter/IgH_repeat_regions_withPromoter_noChr.bed"
     annotfile="/groups/pavri/bioinfo/Marisol/custom_seqs/B18_DFR_newest/filter/refseq.mm9.igh.merged.noChr.bed"
 
-elif args.genome == "Ramos_IgH":
+elif args.genome == ["Ramos_IgH", 'B1-8hi', 'VH3-30', 'VH4-59']:
     IgHChr = ["chr14"]
     #IgHTree[106032614:107288051] = 0
     IgHTree["chr14"] =IntervalTree()

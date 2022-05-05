@@ -64,6 +64,8 @@ elif [ "$PROprot" = "proseq" ];then
 	NPRIME="3"
 elif [ "$PROprot" = "quantrev" ];then
     NPRIME="3"
+elif [ "$PROprot" = "chipseq" ]; then
+    NPRIME="ns"
 else
 	exit
 fi

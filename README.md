@@ -23,3 +23,7 @@ Dependencies are assumed to be loaded into the eexecution environment in advance
 * samtools 1.9
 * bedtools 2.29.0
 * ENCODE kentUtils
+
+# How to Run
+
+See here: [how_to_run.md](how_to_run.md)
